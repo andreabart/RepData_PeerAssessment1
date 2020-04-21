@@ -9,6 +9,15 @@ Loading and preprocessing the data
 
 
 
+
+```r
+fileUrl <- "https://d396qusza40orc.cloudfront.net/repdata%2Fdata%2Factivity.zip"
+download.file(fileUrl, destfile = paste0(getwd(), '/repdata%2Fdata%2Factivity.zip'), method = "curl")
+unzip("repdata%2Fdata%2Factivity.zip",exdir = "data")
+
+DT_activity <- read.csv(file= "data/activity.csv")
+```
+
 What is mean total number of steps taken per day?
 ---
 1) Calculate the total number of steps taken per day
@@ -29,7 +38,7 @@ ggplot(Total_S_D, aes(x = steps))+geom_histogram(binwidth = 1000)+labs(title="To
 ## Warning: Removed 8 rows containing non-finite values (stat_bin).
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
 
 3) Calculate and report the mean and median of the total number of steps taken per day
 
@@ -51,7 +60,7 @@ Interval <- DT_activity %>% group_by(interval) %>% summarise(steps=mean(steps,na
 ggplot(Interval, aes(x = interval , y = steps)) + geom_line() + labs(title = "Avg. Steps", x = "Interval", y = "Avg. Steps vs Intervals")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png)<!-- -->
 
 2) Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -101,7 +110,7 @@ DT_activity_Clean_Grouped <- DT_activity_Clean %>% group_by(date) %>% summarise(
 ggplot(DT_activity_Clean_Grouped, aes(x = steps))+geom_histogram(binwidth = 1000)+labs(title="Total number of steps taken per day",x="Steps",y="Frequency")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-11-1.png)<!-- -->
 
 What is the impact of imputing missing data on the estimates of the total daily number of steps?
 
@@ -135,4 +144,4 @@ Interval_W <- DT_activity_Clean %>% group_by(interval,week) %>% summarise(steps=
 ggplot(Interval_W, aes(x = interval , y = steps)) + geom_line() + facet_grid(.~week)+labs(title = "Avg. Steps", x = "Interval", y = "Avg. Steps vs Intervals")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-12-1.png)<!-- -->
+![](PA1_template_files/figure-html/unnamed-chunk-14-1.png)<!-- -->
